@@ -9,7 +9,7 @@ import './App.css';
 class App extends React.Component {
   state = {
     user: {},
-    followers: {}
+    followers: []
   };
 
   componentDidMount() {
@@ -43,6 +43,7 @@ class App extends React.Component {
           followers={this.state.user.followers}
           following={this.state.user.following}
           bio={this.state.user.bio}
+          followerList={this.state.followers}
         />
       </div>
     )

@@ -25,7 +25,27 @@ const Details = styled.div`
   flex-direction: column;
 `;
 
-const GithubUserCard = ({ avatarUrl, name, username, location, profileUrl, followers, following, bio }) => {
+const Followers = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+  h1 {
+    width: 100%;
+  }
+`;
+
+const Follower = styled.div`
+  width: 20%;
+  padding: 8px;
+  text-align: center;
+  
+  img {
+    width: 40%;
+  }
+`;
+
+const GithubUserCard = ({ avatarUrl, name, username, location, profileUrl, followers, following, bio, followerList}) => {
   return (
     <CardContainer>
       <User>
@@ -40,6 +60,15 @@ const GithubUserCard = ({ avatarUrl, name, username, location, profileUrl, follo
           <p>Bio: {bio}</p>
         </Details>
       </User>
+      <Followers>
+      <h1>Followers</h1>
+        {followerList.map((follower, idx) => (
+          <Follower key={idx}>
+            <a href={follower.html_url}><img src={follower.avatar_url}/></a>
+            <p>{follower.login}</p>
+          </Follower>
+        ))}
+      </Followers>
     </CardContainer>
   )
 }
