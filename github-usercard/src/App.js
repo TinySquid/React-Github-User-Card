@@ -25,7 +25,6 @@ class App extends React.Component {
   }
 
   getApiData = username => {
-    console.log('api call');
     axios.get(`https://api.github.com/users/${username}`)
       .then(response => {
         this.setState({ user: response.data });
@@ -45,7 +44,6 @@ class App extends React.Component {
   }
 
   updateUserSearch = newUsername => {
-    console.log('New user submitted:', newUsername);
     this.setState({ userSearch: newUsername });
   }
 

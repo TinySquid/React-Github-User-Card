@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 
 import GithubCalendar from 'github-calendar';
@@ -62,40 +62,44 @@ const ContributionChart = styled.div`
   width: 98%;
 `
 
-const GithubUserCard = ({ avatarUrl, name, username, location, profileUrl, repos, followers, following, bio, followerList}) => {
+class GithubUserCard extends React.Component {
 
-  useEffect(() => {
-    GithubCalendar('.calendar', username, { responsive: true })
-  }, [username])
+  componentDidUpdate(prevProps) {
+    if (prevProps.username !== this.props.username) {
+      GithubCalendar('.calendar', this.props.username, { responsive: true })
+    }
+  }
 
-  return (
-    <CardContainer>
-      <User>
-        <Avatar href={profileUrl} target="_blank" rel="noopener noreferrer">
-          <img src={avatarUrl} alt={`${name}'s avatar`} />
-        </Avatar>
-        <Details>
-          <h1>{name}</h1>
-          <h2 style={{ fontStyle: 'italic' }}>{username}</h2>
-          <p>Location: {location}</p>
-          <p>Repos: {repos}</p>
-          <p>Followers: {followers}</p>
-          <p>Following: {following}</p>
-          <p>Bio: {bio}</p>
-        </Details>
-      </User>
-      <ContributionChart className="calendar">Loading contribution chart....</ContributionChart>
-      <Followers>
-      <h1>Followers</h1>
-        {followerList.map((follower, idx) => (
-          <Follower key={idx}>
-            <a href={follower.html_url} target="_blank" rel="noopener noreferrer"><img src={follower.avatar_url} alt={`${follower.login}'s avatar`}/></a>
-            <p>{follower.login}</p>
-          </Follower>
-        ))}
-      </Followers>
-    </CardContainer>
-  )
+  render() {
+    return (
+      <CardContainer>
+        <User>
+          <Avatar href={this.props.profileUrl} target="_blank" rel="noopener noreferrer">
+            <img src={this.props.avatarUrl} alt={`${this.props.name}'s avatar`} />
+          </Avatar>
+          <Details>
+            <h1>{this.props.name}</h1>
+            <h2 style={{ fontStyle: 'italic' }}>{this.props.username}</h2>
+            <p>Location: {this.props.location}</p>
+            <p>Repos: {this.props.repos}</p>
+            <p>Followers: {this.props.followers}</p>
+            <p>Following: {this.props.following}</p>
+            <p>Bio: {this.props.bio}</p>
+          </Details>
+        </User>
+        <ContributionChart className="calendar">Loading contribution chart....</ContributionChart>
+        <Followers>
+          <h1>Followers</h1>
+          {this.props.followerList.map((follower, idx) => (
+            <Follower key={idx}>
+              <a href={follower.html_url} target="_blank" rel="noopener noreferrer"><img src={follower.avatar_url} alt={`${follower.login}'s avatar`} /></a>
+              <p>{follower.login}</p>
+            </Follower>
+          ))}
+        </Followers>
+      </CardContainer>
+    )
+  }
 }
 
 export default GithubUserCard;
