@@ -1,4 +1,7 @@
 .app {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
+
+@import "https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css";
